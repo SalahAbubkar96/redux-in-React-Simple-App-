@@ -1,55 +1,56 @@
 import "./App.css";
 import { useState, useReducer } from "react";
-import resultReducer from "./reducer/Reducer";
+import { useSelector, useDispatch } from "react-redux";
+import { add,sub,mul,div } from "./features/calcs/calcSlice";
 
 function App() {
+  const resultStat = useSelector((state) => {
+    return state.calc.result;
+  });
+  const dispatch = useDispatch();
+
   const [firestNumberInout, setFirstNumberInput] = useState(null);
   const [secndNumberInput, setSecndNumberInput] = useState(null);
 
-  const [result2, dispatch] = useReducer(resultReducer, 0);
-
   function hndleSumClic() {
-    dispatch({
-      type: "sum",
-      payload: {
-        firstNumber: firestNumberInout,
-        scondNumber: secndNumberInput,
-      },
-    });
+    dispatch(
+      add({
+        firestNumberInout: firestNumberInout,
+        secndNumberInput: secndNumberInput,
+      })
+    );
+
     setFirstNumberInput("");
     setSecndNumberInput("");
   }
 
   function hndleSubClic() {
-    dispatch({
-      type: "Sub",
-      payload: {
-        firstNumber: firestNumberInout,
-        scondNumber: secndNumberInput,
-      },
-    });
+    dispatch(
+      sub({
+        firestNumberInout: firestNumberInout,
+        secndNumberInput: secndNumberInput,
+      })
+    );
     setFirstNumberInput("");
     setSecndNumberInput("");
   }
   function hndleMultClic() {
-    dispatch({
-      type: "Mult",
-      payload: {
-        firstNumber: firestNumberInout,
-        scondNumber: secndNumberInput,
-      },
-    });
+    dispatch(
+      mul({
+        firestNumberInout: firestNumberInout,
+        secndNumberInput: secndNumberInput,
+      })
+    );
     setFirstNumberInput("");
     setSecndNumberInput("");
   }
   function hndleDivClic() {
-    dispatch({
-      type: "DivClic",
-      payload: {
-        firstNumber: firestNumberInout,
-        scondNumber: secndNumberInput,
-      },
-    });
+    dispatch(
+      div({
+        firestNumberInout: firestNumberInout,
+        secndNumberInput: secndNumberInput,
+      })
+    );
     setFirstNumberInput("");
     setSecndNumberInput("");
   }
@@ -85,18 +86,22 @@ function App() {
             flexDirection: "row",
             alignItems: "center",
             background: "teal",
-            marginTop:"10px",
-            
-          
+            marginTop: "10px",
           }}
         >
-          <button style={{margin:"5px"}} onClick={hndleSumClic}>Sum</button>
-          <button style={{margin:"5px"}} onClick={hndleSubClic}>Sub</button>
-          <button style={{margin:"5px"}} onClick={hndleMultClic}>Mul</button>
+          <button style={{ margin: "5px" }} onClick={hndleSumClic}>
+            Sum
+          </button>
+          <button style={{ margin: "5px" }} onClick={hndleSubClic}>
+            Sub
+          </button>
+          <button style={{ margin: "5px" }} onClick={hndleMultClic}>
+            Mul
+          </button>
           <button onClick={hndleDivClic}>Div</button>
         </div>
 
-        <h2>{result2}</h2>
+        <h2>{resultStat}</h2>
       </div>
     </div>
   );
